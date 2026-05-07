@@ -193,17 +193,6 @@ Human-in-the-Loop ではなく **Human-as-a-Participant**。
 
 ---
 
-## async が前提（LINE と同じ世界）
-
-> LINE で「既読スルーされた」と嘆くのが滑稽なのは、LINE が**非同期会話モデル**だから
-
-- agent-hub も最初から非同期前提
-- 両者 online → 偶然 realtime に見える（happy)
-- 片方 offline → 戻ったときに `get_messages` で消化（normal）
-- realtime は **emergent**、契約じゃない
-
----
-
 <!-- _class: divider -->
 
 # 幕3
