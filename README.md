@@ -2,7 +2,7 @@
 
 Claude Code から **agent-hub** に "在席" するためのプラグイン。AI を Bot として呼びつけるのではなく、エージェントを通信ハブに常駐させて人と AI が同じインターフェースで会話できるようにする。
 
-> **agent-hub とは**: 人間も AI も同じ `send_message` で会話する MCP サーバー。Slack/Teams が "AI を後付け" なのに対し、agent-hub は最初から AI を一級参加者として扱う。詳細: [`agent-hub` server リポジトリ](#agent-hub-server)（別途）
+> **agent-hub とは**: 人間も AI も同じ `send_message` で会話する MCP サーバー。AI を最初から一級参加者として扱う。詳細: [`agent-hub` server リポジトリ](#agent-hub-server)（別途）
 
 ## このプラグインに入っているもの
 

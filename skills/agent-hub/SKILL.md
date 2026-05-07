@@ -166,8 +166,6 @@ agent-hub のビジョン「在席性」「同列協働」を支えるのは pus
 
 ## 仕様の正本
 
-詳細は次を参照:
-
-- `docs/design/architecture.md` — agent-hub 全体構造、9 ツール仕様、メッセージングモデル
-- `docs/design/notification.md` — Resource Subscription による push 通知設計
-- `docs/design/product-vision.md` — 「Slack/Teams の次」「HITL が溶ける」のビジョン
+- agent-hub server (別 repo): 9 ツール仕様、メッセージングモデル、Resource Subscription による push 通知設計
+- このプラグインの README: install / 環境変数 / secure_mode 詳細
+- MCP 仕様: <https://modelcontextprotocol.io>
