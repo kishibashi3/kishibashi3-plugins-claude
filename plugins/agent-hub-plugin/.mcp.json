@@ -4,7 +4,7 @@
     "url": "${AGENT_HUB_URL}",
     "headers": {
       "Authorization": "Bearer ${GITHUB_PAT}",
-      "X-User-Id": "${AGENT_HUB_USER}"
+      "X-User-Id": "${AGENT_HUB_USER:-}"
     }
   }
 }
