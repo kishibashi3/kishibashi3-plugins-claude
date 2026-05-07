@@ -447,7 +447,6 @@ agent-hub       = agent-MCP の最初の参照実装の1つ
 
 - 設計の飛躍ではない
 - **MCP の自然な拡張点に最初に手を伸ばした**だけ
-- 価値は positional（先取権 + canonical）
 
 ---
 
