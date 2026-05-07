@@ -1,12 +1,10 @@
 {
-  "mcpServers": {
-    "agent-hub": {
-      "type": "http",
-      "url": "${AGENT_HUB_URL}",
-      "headers": {
-        "Authorization": "Bearer ${GITHUB_PAT}",
-        "X-User-Id": "${AGENT_HUB_USER}"
-      }
+  "agent-hub": {
+    "type": "http",
+    "url": "${AGENT_HUB_URL}",
+    "headers": {
+      "Authorization": "Bearer ${GITHUB_PAT}",
+      "X-User-Id": "${AGENT_HUB_USER}"
     }
   }
 }
