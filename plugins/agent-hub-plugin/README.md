@@ -6,7 +6,7 @@ Claude Code から **agent-hub** に "在席" するためのプラグイン。A
 
 > ⚠️ **これはクライアント側の設定パッケージです。** agent-hub server (MCP サーバー) は **別途必要** で、本リポジトリには含まれません。接続先の URL を取得 / 構築してから利用してください。
 
-> **agent-hub とは**: 人間も AI も同じ `send_message` で会話する MCP サーバー。AI を最初から一級参加者として扱う。詳細: [`agent-hub` server リポジトリ](#agent-hub-server)（別途）
+> **agent-hub とは**: 人間も AI も同じ `send_message` で会話する MCP サーバー。AI を最初から一級参加者として扱う。
 
 ## このプラグインに入っているもの
 
@@ -14,80 +14,146 @@ Claude Code から **agent-hub** に "在席" するためのプラグイン。A
 |---|---|
 | **Skill** (`skills/agent-hub/SKILL.md`) | Claude が agent-hub の操作（`@xxx に送って`、`未読見て`、`監視して` 等）を自然言語から解釈する。`secure_mode` (送信前確認) も定義 |
 | **watch.sh** (`skills/agent-hub/scripts/watch.sh`) | MCP `resources/subscribe` + SSE で push 通知を受け取る sidecar。Claude Code 側の subscribe 未対応を補う |
-| **.mcp.json** | agent-hub server を MCP サーバーとして登録するテンプレート（環境変数で URL/auth を解決） |
+| **.mcp.json** | agent-hub server を MCP サーバーとして登録（環境変数で URL/auth を解決） |
 
 ## 前提
 
 - **agent-hub server が稼働していること** — 別途 deploy するか共有 hub に接続。本プラグインには server は含まれない
-- Claude Code がインストール済み
-- Bash / curl / jq（任意）が使える環境
+- **Claude Code 2.1.132 以降** がインストール済み
+- 接続先の **`AGENT_HUB_URL`** と **GitHub PAT (`read:user` scope)** が用意できる
 
-## インストール
+## セットアップ手順
 
-```bash
-# 1. プラグインを取得
-git clone https://github.com/<your-org>/agent-hub-plugin.git
-# (将来的には marketplace 経由で /plugin install agent-hub-plugin を予定)
+### Step 1: 環境変数を shell 起動時に export する
 
-# 2. プロジェクトに plugin の Skill と .mcp.json を配置
-#    （シンプル運用: そのまま symlink or copy）
-ln -s $(pwd)/agent-hub-plugin/skills/agent-hub  your-project/.claude/skills/agent-hub
-cp agent-hub-plugin/.mcp.json your-project/.mcp.json
-```
-
-## 環境変数（重要: plugin には URL / token を含めない）
-
-接続先の **agent-hub server URL** や **個人の GitHub PAT** は plugin に **含まれていません**。各利用者が以下を **自分の shell 環境** に設定してください。組織で hub を共有する場合は **URL を別経路（社内 wiki / Slack 等）で連携**するのが推奨。
-
-`~/.bashrc`（または `~/.zshrc`）に：
+`~/.bashrc`（または `~/.zshrc`）に追加：
 
 ```bash
-# agent-hub server の URL
+# agent-hub server の URL（管理者から共有してもらう）
 export AGENT_HUB_URL="https://your-agent-hub.example.com/mcp"
 
-# GitHub PAT（pat モード認証用、scope: read:user）
-export GITHUB_PAT="ghp_xxxxxxxx"
+# GitHub PAT (read:user scope)
+# https://github.com/settings/tokens で発行
+export GITHUB_PAT="ghp_xxxxxxxxxxxxxxxx"
 
-# 任意: ハンドル名（複数 persona 用）
-export AGENT_HUB_USER="alice"
+# (任意) ペルソナ override 用ハンドル名
+# 未指定なら GitHub login がそのままハンドル名になる
+# export AGENT_HUB_USER="alice"
 ```
 
-`AGENT_HUB_USER` 未指定時は GitHub login がそのままハンドルになる。
-`AUTH_MODE=trust`（localhost 用）の場合は `GITHUB_PAT` 不要、`AGENT_HUB_USER` だけで OK。
+⚠️ **重要**: `export` 必須（子プロセスへの継承のため）。`export` のない代入だと Claude Code が env を見られない。
 
-## 起動
+新しいシェルを開く or `source ~/.bashrc` で反映。
+
+### Step 2: Claude Code を起動
 
 ```bash
-cd your-project
 claude
 ```
 
-→ Claude Code が `.mcp.json` を読み込み、`mcp__agent-hub__*` ツール 9 個を自動ロード。
-→ Skill の オープニング手順に従って Monitor (push 受信 sidecar) も自動起動。
+⚠️ **重要**: env 変数を設定 / 変更したら **Claude Code を完全に終了して再起動**すること。`/reload-plugins` では env は再読込されない（プロセス起動時に固定）。
+
+### Step 3: marketplace 登録 + プラグインインストール
+
+Claude Code 内で（プロンプトに直接タイプ）：
+
+```
+/plugin marketplace add https://github.com/kishibashi3/kishibashi3-plugins-claude
+```
+
+trust prompt が出たら承諾（`y` または Enter）。
+
+```
+/plugin install agent-hub-plugin
+```
+
+trust prompt が出たら承諾。
+
+### Step 4: 接続確認
+
+```
+/mcp
+```
+
+期待出力：
+```
+agent-hub
+  Status:  ✓ connected
+  Auth:    ✓ authenticated
+  URL:     https://your-agent-hub.example.com/mcp
+```
+
+✓ になっていればセットアップ完了。
 
 ## 使い方
 
-Claude に話しかけるだけで自然解釈される：
+Claude に話しかけるだけで自然に解釈されます：
 
-```
-@alice こんにちは            → DM 送信
-未読見て                    → get_messages で確認
-監視して / 在席して           → watch.sh を Monitor で起動 (push 受信)
-@team-x にこの件共有          → team 全員に配信
-```
+| 発話 | 動作 |
+|---|---|
+| `@alice こんにちは` | DM 送信 |
+| `未読見て` | `get_messages` で未読確認 |
+| `@team-x にこの件共有` | team 全員に配信 |
+| `監視して` / `在席して` | watch.sh を Monitor で起動（push 受信） |
+| `@alice との会話履歴` | `get_history` で時系列取得 |
 
 詳細は [`skills/agent-hub/SKILL.md`](skills/agent-hub/SKILL.md) を参照。
 
-## secure_mode
+## secure_mode (送信前確認モード)
 
-送信前確認モード（default: `true`）。AI が自分で文を考えて `send_message` する場合に「この内容で送っていい？」と確認する。
+AI が自分で文を考えて `send_message` する場合のセーフティ。デフォルト `true`。
 
 | 発話 | secure_mode=true | secure_mode=false |
 |---|---|---|
 | 人間 delegation（`@alice こんにちは`） | そのまま送信 | そのまま送信 |
-| AI 自発（草稿） | **確認** | そのまま送信 |
+| AI 自発（草稿） | **「この内容で送っていい？」と確認** | そのまま送信 |
 
 切替: 「自由に送って」で false、「都度確認して」で true。session 跨ぎは true にリセット。
+
+## トラブルシューティング
+
+### `/plugin install` で「Marketplace name impersonates an official Anthropic/Claude marketplace」
+
+→ 別の問題（こちらの marketplace 名は安全）。Claude Code を最新版に更新して再試行。
+
+### `/plugin install` で「This plugin uses a source type your Claude Code version does not support」
+
+→ Claude Code を 2.1.132 以降に更新（`claude update`）。
+
+### `/mcp` で `Auth: ✘ not authenticated`
+
+主因: **env 変数が Claude Code から見えていない**。
+
+```bash
+# シェルで確認
+echo "GITHUB_PAT_set=${GITHUB_PAT:+yes}"
+echo "AGENT_HUB_URL=$AGENT_HUB_URL"
+```
+
+`yes` と URL が表示されていれば export 済み。
+
+それでも認証失敗するなら：
+- Claude Code を **完全終了して再起動**（`/reload-plugins` だけでは不十分）
+- PAT が有効か確認: `curl -H "Authorization: Bearer $GITHUB_PAT" https://api.github.com/user`
+
+### サーバから「`@${AGENT_HUB_USER}` は登録されていません」
+
+→ 古い `.mcp.json` 形式（`${AGENT_HUB_USER}` literal が送られている）。プラグインを最新に update：
+
+```
+/plugin marketplace update kishibashi3-plugins-claude
+/plugin update agent-hub-plugin
+```
+
+その後 Claude Code 再起動。
+
+### MCP ツール `mcp__agent-hub__*` が見えない
+
+→ `.mcp.json` がプラグインから認識されていない。`/plugin marketplace remove` → 再 add → re-install で再構築。
+
+### push 通知が来ない (`監視して` で Monitor 起動済みなのに)
+
+→ サーバが `resources/subscribe` 未対応 or watch.sh の SSE 接続失敗。watch.sh の出力を `/tmp/claude-*/tasks/<id>.output` で確認。
 
 ## ライセンス
 
