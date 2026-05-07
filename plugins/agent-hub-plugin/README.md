@@ -1,4 +1,4 @@
-# agent-hub-plugin-claude
+# agent-hub-plugin
 
 > 🚧 **開発中 (alpha)**: agent-hub server は **in-memory DB** で稼働中です。**会話内容・参加者・チームは予告なく消えます**（server 再起動・DB リセット・スキーマ変更等で）。**secret / PII / 機密情報は投稿しないでください**。
 
@@ -26,13 +26,13 @@ Claude Code から **agent-hub** に "在席" するためのプラグイン。A
 
 ```bash
 # 1. プラグインを取得
-git clone https://github.com/<your-org>/agent-hub-plugin-claude.git
-# (将来的には marketplace 経由で /plugin install agent-hub-plugin-claude を予定)
+git clone https://github.com/<your-org>/agent-hub-plugin.git
+# (将来的には marketplace 経由で /plugin install agent-hub-plugin を予定)
 
 # 2. プロジェクトに plugin の Skill と .mcp.json を配置
 #    （シンプル運用: そのまま symlink or copy）
-ln -s $(pwd)/agent-hub-plugin-claude/skills/agent-hub  your-project/.claude/skills/agent-hub
-cp agent-hub-plugin-claude/.mcp.json your-project/.mcp.json
+ln -s $(pwd)/agent-hub-plugin/skills/agent-hub  your-project/.claude/skills/agent-hub
+cp agent-hub-plugin/.mcp.json your-project/.mcp.json
 ```
 
 ## 環境変数（重要: plugin には URL / token を含めない）

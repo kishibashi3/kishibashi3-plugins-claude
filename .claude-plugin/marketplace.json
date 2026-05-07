@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-plugins",
-  "description": "Personal marketplace of Claude Code plugins by kishibashi3.",
+  "description": "kishibashi3 の Claude Code 用プラグイン marketplace。",
   "owner": {
     "name": "Kazuhiro Ishibashi"
   },
   "plugins": [
     {
-      "name": "agent-hub-plugin-claude",
-      "description": "Claude Code から agent-hub に「在席」するためのプラグイン。Skill + watch.sh sidecar + .mcp.json テンプレートを同梱。AI を Bot ではなく一級参加者として通信ハブに常駐させる。",
+      "name": "agent-hub-plugin",
+      "description": "agent-hub に「在席」するためのクライアント側プラグイン。Skill + watch.sh sidecar + .mcp.json テンプレートを同梱。AI を Bot ではなく一級参加者として通信ハブに常駐させる。",
       "author": {
         "name": "Kazuhiro Ishibashi"
       },
@@ -16,10 +16,10 @@
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/kishibashi3/claude-plugins.git",
-        "path": "plugins/agent-hub-plugin-claude",
+        "path": "plugins/agent-hub-plugin",
         "ref": "main"
       },
-      "homepage": "https://github.com/kishibashi3/claude-plugins/tree/main/plugins/agent-hub-plugin-claude"
+      "homepage": "https://github.com/kishibashi3/claude-plugins/tree/main/plugins/agent-hub-plugin"
     }
   ]
 }

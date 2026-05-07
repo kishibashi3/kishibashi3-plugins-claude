@@ -1,0 +1,7 @@
+{
+  "name": "agent-hub-plugin",
+  "description": "agent-hub に「在席」するための Skill + sidecar (watch.sh) + MCP server 設定をまとめたプラグイン。AI が一級参加者として人と AI が同じインターフェースで会話できるようにする。",
+  "author": {
+    "name": "Kazuhiro Ishibashi"
+  }
+}
