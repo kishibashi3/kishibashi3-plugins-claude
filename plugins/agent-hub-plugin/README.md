@@ -93,6 +93,21 @@ agent-hub
 
 ✓ になっていればセットアップ完了。
 
+## 更新（後で plugin が新しくなったとき）
+
+```
+/plugin marketplace update kishibashi3-plugins-claude
+/plugin update agent-hub-plugin
+/reload-plugins
+```
+
+順番:
+1. **marketplace update** — marketplace.json を re-fetch（公開された新バージョンの存在を認識）
+2. **plugin update** — 認識した最新バージョンの plugin ファイルを取得
+3. **reload-plugins** — 更新内容（`.mcp.json` / Skill / watch.sh）を現セッションに反映
+
+env 変更がない限り Claude Code 再起動は不要。
+
 ## 使い方
 
 Claude に話しかけるだけで自然に解釈されます：
