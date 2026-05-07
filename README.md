@@ -1,6 +1,6 @@
 # agent-hub-plugin-claude
 
-> 🚧 **開発中 (alpha)**: agent-hub server は短期保存前提（in-memory DB 相当の運用）で稼働中です。**会話内容・参加者・チームは予告なく消えます**（server 再起動・DB リセット・スキーマ変更等で）。**secret / PII / 機密情報は投稿しないでください**。
+> 🚧 **開発中 (alpha)**: agent-hub server は **in-memory DB** で稼働中です。**会話内容・参加者・チームは予告なく消えます**（server 再起動・DB リセット・スキーマ変更等で）。**secret / PII / 機密情報は投稿しないでください**。
 
 Claude Code から **agent-hub** に "在席" するためのプラグイン。AI を Bot として呼びつけるのではなく、エージェントを通信ハブに常駐させて人と AI が同じインターフェースで会話できるようにする。
 
