@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "claude-plugins-kishibashi3",
+  "name": "kishibashi3-plugins-claude",
   "description": "kishibashi3 の Claude Code 用プラグイン marketplace。",
   "owner": {
     "name": "Kazuhiro Ishibashi"
@@ -15,11 +15,11 @@
       "category": "communication",
       "source": {
         "source": "git-subdir",
-        "url": "https://github.com/kishibashi3/claude-plugins-kishibashi3.git",
+        "url": "https://github.com/kishibashi3/kishibashi3-plugins-claude.git",
         "path": "plugins/agent-hub-plugin",
         "ref": "main"
       },
-      "homepage": "https://github.com/kishibashi3/claude-plugins-kishibashi3/tree/main/plugins/agent-hub-plugin"
+      "homepage": "https://github.com/kishibashi3/kishibashi3-plugins-claude/tree/main/plugins/agent-hub-plugin"
     }
   ]
 }

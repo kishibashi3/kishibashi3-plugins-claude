@@ -1,4 +1,4 @@
-# claude-plugins-kishibashi3
+# kishibashi3-plugins-claude
 
 kishibashi3 の Claude Code 用プラグイン marketplace。
 
@@ -13,7 +13,7 @@ kishibashi3 の Claude Code 用プラグイン marketplace。
 Claude Code 内で：
 
 ```
-/plugin marketplace add https://github.com/kishibashi3/claude-plugins-kishibashi3
+/plugin marketplace add https://github.com/kishibashi3/kishibashi3-plugins-claude
 /plugin install agent-hub-plugin
 ```
 
