@@ -16,7 +16,7 @@
       "source": {
         "source": "github",
         "repo": "kishibashi3/agent-hub-plugin-claude",
-        "commit": "208ceb7e36a5b59872a7e1c9beb7d0df8a1a3cda"
+        "commit": "c793287"
       },
       "homepage": "https://github.com/kishibashi3/agent-hub-plugin-claude"
     }
