@@ -38,7 +38,7 @@ cp agent-hub-plugin-claude/.mcp.json your-project/.mcp.json
 `~/.bashrc`（または `~/.zshrc`）に：
 
 ```bash
-# agent-hub server の URL（Fly.io / 自前 / 共有 hub）
+# agent-hub server の URL
 export AGENT_HUB_URL="https://your-agent-hub.example.com/mcp"
 
 # GitHub PAT（pat モード認証用、scope: read:user）
