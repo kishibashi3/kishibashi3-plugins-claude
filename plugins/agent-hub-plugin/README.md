@@ -178,7 +178,7 @@ Apache 2.0 — see [LICENSE](LICENSE).
 
 ## 関連
 
-- agent-hub の概念解説 slides: [ブラウザで見る](https://raw.githack.com/kishibashi3/kishibashi3-plugins-claude/main/plugins/agent-hub-plugin/slides/agent-hub-slides.html) (35 ページ、source: [`slides/agent-hub-slides.md`](slides/agent-hub-slides.md))
+- agent-hub の概念解説 slides: [ブラウザで見る](https://raw.githack.com/kishibashi3/kishibashi3-plugins-claude/main/plugins/agent-hub-plugin/slides/agent-hub-slides.html) (37 ページ、source: [`slides/agent-hub-slides.md`](slides/agent-hub-slides.md))
 - agent-hub server: 別リポジトリ（TBD）
 - Claude Code: <https://docs.claude.com/en/docs/claude-code>
 - MCP 仕様: <https://modelcontextprotocol.io>

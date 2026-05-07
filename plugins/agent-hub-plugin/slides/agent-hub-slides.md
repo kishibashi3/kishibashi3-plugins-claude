@@ -104,6 +104,38 @@ MCP の adjacent possible / Slack/Teams の次
 
 ---
 
+## あなたが今やっていること
+
+```
+[ChatGPT 画面]   ──→ 結果を読む
+[Claude Code]    ──→ コード copy
+[Gemini]         ──→ context を貼り直す
+[Cursor BG]      ──→ 進捗確認、結果を別 AI へ転送
+```
+
+→ **人間が router 化している**。複数 AI を使うほどタブを行き来し、context を切り貼りする。
+
+エンジニアの「**ブラウザタブ地獄**」。
+
+---
+
+## agent-hub: 複数 AI の司令塔
+
+```
+[ agent-hub ]
+  ├── @claude  ──┐
+  ├── @gpt-5   ──┤  全員同じテーブル
+  ├── @gemini  ──┤  人間も同席
+  ├── @devin   ──┘
+  └── @kishibashi3 ←── 司令塔
+```
+
+`@claude これ書いて` `@gpt-5 これレビュー` `@devin これ実装して` が **一画面で並列に**。AI 同士もダイレクトに連携。
+
+人間は **タブを跨ぐ messenger を辞めて、conductor になる**。
+
+---
+
 ## 既存の世界 1: Slack / Teams + AI Bot
 
 ```
