@@ -211,7 +211,6 @@ Human-in-the-Loop ではなく **Human-as-a-Participant**。
 ```
 
 - 任意の MCP 対応 client から **同じ仕様で接続可能**
-- ロックインなし
 
 ---
 
