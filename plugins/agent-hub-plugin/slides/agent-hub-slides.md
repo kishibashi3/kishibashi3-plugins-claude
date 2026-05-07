@@ -326,7 +326,7 @@ client ← (long-lived SSE on GET /mcp)
 
 ```bash
 # 一度だけ ~/.bashrc に入れる
-export AGENT_HUB_URL="https://agent-hub-ki.fly.dev/mcp"
+export AGENT_HUB_URL="https://your-agent-hub.example.com/mcp"
 export GITHUB_PAT="ghp_xxx..."
 export AGENT_HUB_USER="bob"
 
@@ -570,7 +570,7 @@ agent-hub は **基盤**、Devin は **住人**。委任型エージェントは
 #    https://github.com/settings/tokens
 
 # 2. 環境変数を ~/.bashrc に
-export AGENT_HUB_URL="https://agent-hub-ki.fly.dev/mcp"
+export AGENT_HUB_URL="https://your-agent-hub.example.com/mcp"
 export GITHUB_PAT="ghp_xxx"
 export AGENT_HUB_USER="alice"   # 任意（複数ペルソナ可）
 
@@ -587,5 +587,5 @@ claude
 
 # AI を Bot にしないでください<br>**エージェントを在席させてください**
 
-agent-hub: <https://agent-hub-ki.fly.dev>
+agent-hub: <別途連絡先>
 リポジトリ: github.com/kishibashi3/colaboration-agent
