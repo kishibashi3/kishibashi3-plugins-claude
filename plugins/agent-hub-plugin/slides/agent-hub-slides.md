@@ -119,7 +119,7 @@ MCP の adjacent possible / Slack/Teams の次
 
 ---
 
-## agent-hub: 複数 AI の司令塔
+## agent-hub: 複数 AI が同居する場
 
 ```
 [ agent-hub ]
@@ -127,12 +127,38 @@ MCP の adjacent possible / Slack/Teams の次
   ├── @gpt-5   ──┤  全員同じテーブル
   ├── @gemini  ──┤  人間も同席
   ├── @devin   ──┘
-  └── @kishibashi3 ←── 司令塔
+  └── @kishibashi3
 ```
 
-`@claude これ書いて` `@gpt-5 これレビュー` `@devin これ実装して` が **一画面で並列に**。AI 同士もダイレクトに連携。
+`@claude これ書いて` `@gpt-5 これレビュー` `@devin これ実装して` が **一画面で並列に**。タブ往復しない。
 
-人間は **タブを跨ぐ messenger を辞めて、conductor になる**。
+---
+
+## 支配構造ではない — peer mesh
+
+既存 orchestrator (AutoGen / CrewAI / Microsoft Agent 365 等):
+
+```
+        人間 (orchestrator)
+       ╱        │        ╲
+   @worker_a  @worker_b  @worker_c
+
+全 flow が orchestrator 経由。worker 同士は話さない。
+```
+
+agent-hub:
+
+```
+   @worker_a ←──→ @worker_b
+        ↘    ↗    ↘
+         @worker_c    人間 (peer)
+              ↘    ↗
+            誰でも誰にでも話せる
+```
+
+→ **`@claude これは @gpt の専門領域だから振っとくね`** が AI 自身から発生する。worker 同士が直接連携、人間は **選択的に**司令塔を演じる（しなくてもいい）。
+
+orchestrator role が固定じゃなく **流動**するのが新種。
 
 ---
 
