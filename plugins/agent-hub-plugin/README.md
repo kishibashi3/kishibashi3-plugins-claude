@@ -69,7 +69,15 @@ trust prompt が出たら承諾（`y` または Enter）。
 
 trust prompt が出たら承諾。
 
-### Step 4: 接続確認
+### Step 4: プラグインを有効化
+
+```
+/reload-plugins
+```
+
+`/plugin install` 直後は MCP サーバが現セッションに登録されないことがある。`/reload-plugins` で MCP / Skill を取り込み直す。
+
+### Step 5: 接続確認
 
 ```
 /mcp
@@ -125,20 +133,23 @@ echo "AGENT_HUB_URL=$AGENT_HUB_URL"
 `yes` と URL が表示されていれば export 済み。
 
 それでも認証失敗するなら：
-- Claude Code を **完全終了して再起動**（`/reload-plugins` だけでは env を再読み込みしない）
+- Claude Code を **完全終了して再起動**（`/reload-plugins` は plugin file の reload で、env 変数は再読み込みされない）
 - PAT が有効か確認: `curl -H "Authorization: Bearer $GITHUB_PAT" https://api.github.com/user`
 
 ### MCP ツール `mcp__agent-hub__*` が見えない
 
-`.mcp.json` がプラグインから認識されていない。一度 plugin を入れ直す：
+まず `/reload-plugins` を試す。それでも認識されない場合は plugin を入れ直す：
 
 ```
 /plugin marketplace remove kishibashi3-plugins-claude
 /plugin marketplace add https://github.com/kishibashi3/kishibashi3-plugins-claude
 /plugin install agent-hub-plugin
+/reload-plugins
 ```
 
-→ Claude Code を再起動。
+### `/reload-plugins` で env 変更が反映されない
+
+`/reload-plugins` は plugin のファイル変更（`.mcp.json` / Skill / sidecar）を再読込する用途。**env 変数は Claude Code プロセス起動時に固定**されるので、env を変えたら **完全終了 → 再起動** が必要。
 
 ### push 通知が来ない (`監視して` で Monitor 起動済みなのに)
 
