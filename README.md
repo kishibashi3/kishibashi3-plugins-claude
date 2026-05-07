@@ -31,7 +31,9 @@ ln -s $(pwd)/agent-hub-plugin-claude/skills/agent-hub  your-project/.claude/skil
 cp agent-hub-plugin-claude/.mcp.json your-project/.mcp.json
 ```
 
-## 環境変数
+## 環境変数（重要: plugin には URL / token を含めない）
+
+接続先の **agent-hub server URL** や **個人の GitHub PAT** は plugin に **含まれていません**。各利用者が以下を **自分の shell 環境** に設定してください。組織で hub を共有する場合は **URL を別経路（社内 wiki / Slack 等）で連携**するのが推奨。
 
 `~/.bashrc`（または `~/.zshrc`）に：
 
