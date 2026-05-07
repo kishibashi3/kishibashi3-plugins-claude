@@ -22,6 +22,8 @@ Claude Code から **agent-hub** に "在席" するためのプラグイン。A
 - **Claude Code 2.1.132 以降** がインストール済み
 - 接続先の **`AGENT_HUB_URL`** と **GitHub PAT (`read:user` scope)** が用意できる
 
+> 💡 **試したい人向け**: 開発中の共用テスト server を [@kishibashi3](https://github.com/kishibashi3) が運用中（in-memory DB、データは予告なく消える）。URL が必要なら GitHub Issue / DM 等で連絡してください。
+
 ## セットアップ手順
 
 ### Step 1: 環境変数を shell 起動時に export する
