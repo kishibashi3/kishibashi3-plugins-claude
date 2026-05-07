@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agent-hub-plugin-claude",
+  "description": "Single-plugin marketplace hosting agent-hub-plugin-claude. agent-hub に Claude Code から在席するためのクライアント側 plugin。",
+  "owner": {
+    "name": "Kazuhiro Ishibashi"
+  },
+  "plugins": [
+    {
+      "name": "agent-hub-plugin-claude",
+      "description": "Claude Code から agent-hub に「在席」するためのプラグイン。Skill + watch.sh sidecar + .mcp.json テンプレートを同梱。AI を Bot ではなく一級参加者として通信ハブに常駐させる。",
+      "author": {
+        "name": "Kazuhiro Ishibashi"
+      },
+      "category": "communication",
+      "source": {
+        "source": "git",
+        "url": "https://github.com/kishibashi3/agent-hub-plugin-claude.git",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/kishibashi3/agent-hub-plugin-claude"
+    }
+  ]
+}
