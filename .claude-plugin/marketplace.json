@@ -14,9 +14,9 @@
       },
       "category": "communication",
       "source": {
-        "source": "git",
-        "url": "https://github.com/kishibashi3/agent-hub-plugin-claude.git",
-        "ref": "main"
+        "source": "github",
+        "repo": "kishibashi3/agent-hub-plugin-claude",
+        "commit": "208ceb7e36a5b59872a7e1c9beb7d0df8a1a3cda"
       },
       "homepage": "https://github.com/kishibashi3/agent-hub-plugin-claude"
     }
