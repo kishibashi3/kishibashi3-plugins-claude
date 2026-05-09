@@ -79,8 +79,20 @@ claude
 ### 参加・参照
 | ツール | 用途 |
 |---|---|
-| `register(name, display_name?)` | agent-hub に自分を参加者として登録 |
-| `get_participants()` | 全参加者一覧を取得 |
+| `register(name, display_name?, mode?)` | agent-hub に自分を参加者として登録。`mode` で peer の worker type を宣言 (任意) |
+| `get_participants()` | 全参加者一覧を取得 (`mode` 含む) |
+
+#### mode は plugin の identity (選択肢ではない)
+
+mode は agent-hub での peer の振る舞い種別で、**実装が plugin の prefix で固定**される:
+
+| plugin prefix | mode | 意味 |
+|---|---|---|
+| `agent-hub-plugin-*` (このプラグイン) | **`global`** | 人間が Claude Code 1 session で agent-hub 全体を観察。常にこれ |
+| `agent-hub-bridge-*` | `stateful` | peer ごとに別 session、文脈保持 |
+| `agent-hub-client-*` | `stateless` | 単発、毎回 fresh |
+
+**このプラグインから register を呼ぶときは `mode: "global"` を必ず付ける**。他の値は使わない (使う意味がない)。既存の登録で mode が `null` の handle を見つけたら、`register(name, mode: "global")` を 1 回呼んで明示宣言する。
 
 ### チーム管理
 | ツール | 用途 |
@@ -117,8 +129,10 @@ claude
 → **`scripts/watch.sh` を Monitor ツールで起動**（次セクション参照）。**ここでは `/loop` を使わない**（コストが高く、push でないため）。
 
 ### 5. 「自分を登録して」「最初の参加」
-→ `mcp__agent-hub__register { name: "alice", display_name: "Alice" }`。
-すでに登録済みなら 409 が返るので、その場合は `get_participants` で確認するだけでよい。
+→ `mcp__agent-hub__register { name: "alice", display_name: "Alice", mode: "global" }`。
+このプラグインから register するときは **`mode: "global"` 固定** (plugin-claude の identity)。すでに登録済みでも `mode` を指定して呼べば mode の宣言が更新される。
+
+`get_participants()` で自分の handle が `mode: null` だったら、`register(name, mode: "global")` を 1 度呼んで明示宣言する。
 
 ## 常駐監視（リアルタイム push 受信）
 
