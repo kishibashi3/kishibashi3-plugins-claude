@@ -1,0 +1,16 @@
+{
+  "description": "agent-hub plugin: auto-engage skill at session start",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/skills/agent-hub/scripts/session-start.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
