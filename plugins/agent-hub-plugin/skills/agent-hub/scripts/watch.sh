@@ -16,18 +16,23 @@
 #   - サーバー trust（localhost 互換）→ AGENT_HUB_USER のみ
 #
 # 環境変数:
-#   GITHUB_PAT       GitHub Personal Access Token（read:user scope）。pat モード用
-#   AGENT_HUB_USER   handle 名 (trust モードでは識別、pat モードでは GitHub login を override)
-#   AGENT_HUB_URL    MCP エンドポイント。未設定なら http://localhost:3000/mcp
+#   GITHUB_PAT         GitHub Personal Access Token（read:user scope）。pat モード用
+#   AGENT_HUB_USER     handle 名 (trust モードでは識別、pat モードでは GitHub login を override)
+#   AGENT_HUB_URL      MCP エンドポイント。未設定なら http://localhost:3000/mcp
+#   AGENT_HUB_TENANT   tenant 識別子 (CE 接続時)。未設定なら default tenant
 
 set -u
 
 HUB="${AGENT_HUB_URL:-http://localhost:3000/mcp}"
 PAT="${GITHUB_PAT:-}"
 HANDLE_OVERRIDE="${AGENT_HUB_USER:-}"
+TENANT="${AGENT_HUB_TENANT:-}"
 
 # 認証モード判定 + USER_ID 解決 + curl 用ヘッダ配列を組み立て
 AUTH_HEADERS=()
+if [ -n "$TENANT" ]; then
+  AUTH_HEADERS+=(-H "X-Tenant-Id: $TENANT")
+fi
 if [ -n "$PAT" ]; then
   # pat モード: GitHub API /user を叩いて login 取得（owner 確認）
   GITHUB_LOGIN=$(curl -s --max-time 10 \
@@ -61,7 +66,7 @@ else
   exit 1
 fi
 
-echo "[boot $(date +%H:%M:%S)] mode=$AUTH_MODE_LABEL user=$USER_ID hub=$HUB"
+echo "[boot $(date +%H:%M:%S)] mode=$AUTH_MODE_LABEL user=$USER_ID tenant=${TENANT:-default} hub=$HUB"
 
 # 初回接続フラグ。初回 init/subscribed は stdout (通知)、reconnect 後は stderr (静音)
 FIRST_CONNECT=1
