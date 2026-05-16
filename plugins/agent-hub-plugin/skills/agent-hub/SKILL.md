@@ -86,7 +86,7 @@ claude
 | ツール | 用途 |
 |---|---|
 | `register(name, display_name?, mode?)` | agent-hub に自分を参加者として登録。`mode` で peer の worker type を宣言 (任意) |
-| `get_participants()` | 全参加者一覧を取得 (`mode` 含む) |
+| `get_participants()` | 全参加者一覧を取得。response は person/team の discriminated union (`type` field で判別) |
 
 #### mode は plugin の identity (選択肢ではない)
 
@@ -138,7 +138,11 @@ mode は agent-hub での peer の振る舞い種別で、**実装が plugin の
 → `mcp__agent-hub__register { name: "alice", display_name: "Alice", mode: "global" }`。
 このプラグインから register するときは **`mode: "global"` 固定** (plugin-claude の identity)。すでに登録済みでも `mode` を指定して呼べば mode の宣言が更新される。
 
-`get_participants()` で自分の handle が `mode: null` だったら、`register(name, mode: "global")` を 1 度呼んで明示宣言する。
+`get_participants()` の response は `type: 'person' | 'team'` の discriminated union。
+- person entry: `{ name, type: 'person', display_name, mode, is_online }`
+- team entry: `{ name, type: 'team', owner, members, created_at }` ← `mode` field なし
+
+自分の handle (= person entry) を取るときは `type === 'person'` で絞ってから参照する。`mode: null` だったら、`register(name, mode: "global")` を 1 度呼んで明示宣言する。team entry を素朴に `.mode` 参照すると `undefined` が返り「未宣言」と誤認するので注意。詳細は agent-hub の `ParticipantEntry` 型を参照。
 
 ## 常駐監視（リアルタイム push 受信）
 
